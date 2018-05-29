@@ -60,6 +60,6 @@
     "url": "git://github.com/cb1kenobi/nanobuffer.git"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   }
 }
