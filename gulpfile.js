@@ -1,7 +1,6 @@
 'use strict';
 
 const $ = require('gulp-load-plugins')();
-const del = require('del');
 const fs = require('fs-extra');
 const gulp = require('gulp');
 const manifest = require('./package.json');
@@ -17,12 +16,11 @@ const docsDir = path.join(__dirname, 'docs');
  */
 gulp.task('clean', ['clean-coverage', 'clean-dist', 'clean-docs']);
 
-gulp.task('clean-coverage', done => { del([coverageDir]).then(() => done()); });
+gulp.task('clean-coverage', done => { fs.remove(coverageDir, done); });
 
-gulp.task('clean-dist', done => { del([distDir]).then(() => done()); });
+gulp.task('clean-dist', done => { fs.remove(distDir, done); });
 
-gulp.task('clean-docs', done => { del([docsDir]).then(() => done()); });
-
+gulp.task('clean-docs', done => { fs.remove(docsDir, done); });
 
 /*
  * build tasks
@@ -108,7 +106,6 @@ function runTests(cover) {
 		args.push(
 			'--cache', 'false',
 			'--exclude', 'test',
-			'--exclude', '!test/examples',
 			'--instrument', 'false',
 			'--source-map', 'false',
 			// supported reporters:
