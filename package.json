@@ -8,11 +8,11 @@
   "keywords": [
     "buffer",
     "queue",
-	"nano",
-	"array",
-	"list",
-	"fixed",
-	"cyclic"
+    "nano",
+    "array",
+    "list",
+    "fixed",
+    "cyclic"
   ],
   "scripts": {
     "build": "gulp build",
