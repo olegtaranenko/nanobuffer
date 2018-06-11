@@ -4,6 +4,7 @@
 .DS_Store
 .eslintrc
 .git*
+.nyc_output
 .travis.yml
 coverage
 docs
@@ -13,3 +14,5 @@ npm-debug.log
 yarn-error.log
 src
 test
+yarn.lock
+
