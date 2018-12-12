@@ -4,7 +4,7 @@
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Travis CI Build][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
-[![Code Climate][codeclimate-image]][codeclimate-url]
+[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
 [![Deps][david-image]][david-url]
 [![Dev Deps][david-dev-image]][david-dev-url]
 
@@ -175,8 +175,8 @@ THE SOFTWARE.
 [travis-url]: https://travis-ci.org/cb1kenobi/nanobuffer
 [coveralls-image]: https://img.shields.io/coveralls/cb1kenobi/nanobuffer/master.svg
 [coveralls-url]: https://coveralls.io/r/cb1kenobi/nanobuffer
-[codeclimate-image]: https://img.shields.io/codeclimate/github/cb1kenobi/nanobuffer.svg
-[codeclimate-url]: https://codeclimate.com/github/cb1kenobi/nanobuffer
+[greenkeeper-image]: https://badges.greenkeeper.io/cb1kenobi/nanobuffer.svg
+[greenkeeper-url]: https://greenkeeper.io/
 [david-image]: https://img.shields.io/david/cb1kenobi/nanobuffer.svg
 [david-url]: https://david-dm.org/cb1kenobi/nanobuffer
 [david-dev-image]: https://img.shields.io/david/dev/cb1kenobi/nanobuffer.svg
