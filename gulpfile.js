@@ -1,17 +1,19 @@
 'use strict';
 
-const $ = require('gulp-load-plugins')();
-const fs = require('fs-extra');
-const gulp = require('gulp');
-const manifest = require('./package.json');
-const path = require('path');
-const spawnSync = require('child_process').spawnSync;
+const $          = require('gulp-load-plugins')();
+const ansiColors = require('ansi-colors');
+const fs         = require('fs-extra');
+const gulp       = require('gulp');
+const log        = require('fancy-log');
+const manifest   = require('./package.json');
+const path       = require('path');
+const spawnSync  = require('child_process').spawnSync;
 
 const { parallel, series } = gulp;
 
 const coverageDir = path.join(__dirname, 'coverage');
-const distDir = path.join(__dirname, 'dist');
-const docsDir = path.join(__dirname, 'docs');
+const distDir     = path.join(__dirname, 'dist');
+const docsDir     = path.join(__dirname, 'docs');
 
 /*
  * Clean tasks
@@ -68,8 +70,8 @@ exports.docs = series(parallel(cleanDocs, lintSrc), async () => {
 					brand: {
 						title:       manifest.name,
 						description: manifest.description,
-						respository: 'https://github.com/cb1kenobi/nanobuffer',
-						site:        'https://github.com/cb1kenobi/nanobuffer'
+						respository: manifest.repository,
+						site:        manifest.homepage
 					}
 				}
 			},
@@ -155,7 +157,7 @@ async function runTests(cover) {
 		args.push('test/**/test-*.js');
 	}
 
-	$.util.log('Running: ' + $.util.colors.cyan(execPath + ' ' + args.join(' ')));
+	log(`Running: ${ansiColors.cyan(`${execPath} ${args.join(' ')}`)}`);
 
 	// run!
 	if (spawnSync(execPath, args, { stdio: 'inherit' }).status) {
@@ -182,7 +184,7 @@ function resolveModule(name) {
 	}
 }
 
-exports.test             = series(parallel(lintTest, build), () => runTests());
-exports['test-only']     = series(lintTest, () => runTests());
+exports.test             = series(parallel(lintTest, build),                () => runTests());
+exports['test-only']     = series(lintTest,                                 () => runTests());
 exports.coverage         = series(parallel(cleanCoverage, lintTest, build), () => runTests(true));
-exports['coverage-only'] = series(parallel(cleanCoverage, lintTest), () => runTests(true));
+exports['coverage-only'] = series(parallel(cleanCoverage, lintTest),        () => runTests(true));
