@@ -73,7 +73,7 @@ export default class NanoBuffer {
 	/**
 	 * Changes the maximum number of values allowed in the buffer.
 	 *
-	 * @param {Number} maxSize
+	 * @param {Number} newMaxSize - The new max size of the buffer.
 	 * @access public
 	 */
 	set maxSize(newMaxSize) {
