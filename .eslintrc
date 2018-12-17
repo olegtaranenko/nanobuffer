@@ -21,7 +21,7 @@
     ],
     "root": true,
     "rules": {
-        "array-bracket-spacing": [ "error", "always", { "objectsInArrays": false, "arraysInArrays": false } ],
+        "array-bracket-spacing": [ 'warn', 'always' ],
         "brace-style": [ 2, "1tbs", { "allowSingleLine": true } ],
         "camelcase": "off",
         "chai-expect/missing-assertion": "error",
