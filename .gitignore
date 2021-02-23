@@ -1,9 +1,6 @@
 ._*
 .DS_Store*
-/coverage
-/dist
-/docs
+coverage
 node_modules
 npm-debug.log
 yarn-error.log
-.nyc_output/
