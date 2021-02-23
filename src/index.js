@@ -1,12 +1,7 @@
-/* istanbul ignore if */
-if (!Error.prepareStackTrace) {
-	require('source-map-support/register');
-}
-
 /**
  * A lightweight, fixed-size value buffer.
  */
-export default class NanoBuffer {
+export class NanoBuffer {
 	/**
 	 * Creates a `NanoBuffer` instance.
 	 *
@@ -184,3 +179,5 @@ export default class NanoBuffer {
 		};
 	}
 }
+
+export default NanoBuffer;

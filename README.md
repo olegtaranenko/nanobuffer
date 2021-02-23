@@ -4,7 +4,6 @@
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Travis CI Build][travis-image]][travis-url]
 [![Appveyor CI Build][appveyor-image]][appveyor-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
 [![Deps][david-image]][david-url]
 [![Dev Deps][david-dev-image]][david-dev-url]
 
@@ -15,7 +14,7 @@ overwrite the oldest values. You can iterate over the buffer to pull all of the 
 
 ## Installation
 
-	npm install nanobuffer
+	npm i nanobuffer --save
 
 ## Example
 
@@ -153,8 +152,6 @@ MIT
 [travis-url]: https://travis-ci.org/cb1kenobi/nanobuffer
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/xk2n4qcrwwbyljwl?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/cb1kenobi/nanobuffer
-[coveralls-image]: https://img.shields.io/coveralls/cb1kenobi/nanobuffer/master.svg
-[coveralls-url]: https://coveralls.io/r/cb1kenobi/nanobuffer
 [david-image]: https://img.shields.io/david/cb1kenobi/nanobuffer.svg
 [david-url]: https://david-dm.org/cb1kenobi/nanobuffer
 [david-dev-image]: https://img.shields.io/david/dev/cb1kenobi/nanobuffer.svg
