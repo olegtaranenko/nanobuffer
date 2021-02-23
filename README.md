@@ -148,8 +148,8 @@ MIT
 [npm-url]: https://npmjs.org/package/nanobuffer
 [downloads-image]: https://img.shields.io/npm/dm/nanobuffer.svg
 [downloads-url]: https://npmjs.org/package/nanobuffer
-[travis-image]: https://travis-ci.org/cb1kenobi/nanobuffer.svg?branch=master
-[travis-url]: https://travis-ci.org/cb1kenobi/nanobuffer
+[travis-image]: https://travis-ci.com/cb1kenobi/nanobuffer.svg?branch=master
+[travis-url]: https://travis-ci.com/github/cb1kenobi/nanobuffer
 [appveyor-image]: https://ci.appveyor.com/api/projects/status/xk2n4qcrwwbyljwl?svg=true
 [appveyor-url]: https://ci.appveyor.com/project/cb1kenobi/nanobuffer
 [david-image]: https://img.shields.io/david/cb1kenobi/nanobuffer.svg
