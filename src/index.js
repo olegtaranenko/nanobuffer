@@ -151,10 +151,11 @@ export class NanoBuffer {
 	/**
 	 * Creates an iterator function for this buffer.
 	 *
+	 * @param {boolean} back creates back iterator
 	 * @return {Function}
 	 * @access public
 	 */
-	[Symbol.iterator]() {
+	[Symbol.iterator](back) {
 		let i = 0;
 
 		return {
@@ -163,7 +164,7 @@ export class NanoBuffer {
 				i = Math.min(i, this._maxSize);
 
 				// calculate the index
-				let j = this._head + i - (this._size - 1);
+				let j = back ? this._head - i : this._head + i - (this._size - 1);
 				if (j < 0) {
 					j += this._maxSize;
 				}

@@ -28,10 +28,14 @@ describe('NanoBuffer', () => {
 
 	it('should add an object', () => {
 		const b = new NanoBuffer;
+		expect(b.head).to.equal(0);
 		expect(b.size).to.equal(0);
 		b.push('foo');
 		expect(b.size).to.equal(1);
 		expect(b.head).to.equal(0);
+		b.push('bar');
+		expect(b.size).to.equal(2);
+		expect(b.head).to.equal(1);
 	});
 
 	it('should fill the buffer and wrap', () => {
@@ -211,4 +215,73 @@ describe('NanoBuffer', () => {
 
 		expect(r.value).to.be.undefined;
 	});
+
+	it('should empty buffer not return anything by manually iterating', () => {
+		const b = new NanoBuffer(10);
+
+		const it = b[Symbol.iterator]();
+		let i = 0;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i++}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should be back iterable', () => {
+		const b = new NanoBuffer(10);
+
+		for (let i = 0; i <= 17; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b[Symbol.iterator](true);
+		let i = b.head + b.size;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i--}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should partially filled buffer be back iterable', () => {
+		const b = new NanoBuffer(10);
+
+		for (let i = 0; i <= 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b[Symbol.iterator](true);
+		let i = b.head;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i--}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should empty buffer not return anything by back iterating', () => {
+		const b = new NanoBuffer(10);
+
+		const it = b[Symbol.iterator](true);
+		let i = 0;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i++}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
 });
