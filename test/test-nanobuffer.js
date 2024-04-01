@@ -22,8 +22,40 @@ describe('NanoBuffer', () => {
 		}).to.throw(RangeError, 'Expected maxSize to be zero or greater');
 	});
 
-	it('should get the max size', () => {
-		expect(new NanoBuffer(20).maxSize).to.equal(20);
+	it('should throw error if given two wrong arguments', () => {
+		expect(() => {
+			new NanoBuffer(20, 10);
+		}).to.throw(TypeError, 'Second argument should not be given, if the first argument is a number');
+	});
+
+	it('should be default initialized', () => {
+		const b = new NanoBuffer();
+		expect(b.maxSize).to.equal(10);
+		expect(b.size).to.equal(0);
+		expect(b.head).to.equal(0);
+	});
+
+	it('should be initialized as an empty array with a predefined max size', () => {
+		const b = new NanoBuffer(20);
+		expect(b.maxSize).to.equal(20);
+		expect(b.size).to.equal(0);
+		expect(b.head).to.equal(0);
+	});
+
+	it('should be initialized with a predefined array', () => {
+		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5' ];
+		const b = new NanoBuffer(p);
+		expect(b.maxSize).to.equal(6);
+		expect(b.size).to.equal(6);
+		expect(b.head).to.equal(5);
+	});
+
+	it('should be initialized with a predefined array and a max size', () => {
+		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5' ];
+		const b = new NanoBuffer(p, 4);
+		expect(b.maxSize).to.equal(4);
+		expect(b.size).to.equal(4);
+		expect(b.head).to.equal(1);
 	});
 
 	it('should add an object', () => {
@@ -175,6 +207,38 @@ describe('NanoBuffer', () => {
 		}
 
 		let i = 0;
+		for (const it of b) {
+			expect(it).to.equal(`foo${i++}`);
+		}
+	});
+
+	it('should initialize the predefined buffer, which is smaller than max size', () => {}, () => {
+		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4' ];
+
+		const b = new NanoBuffer(10, p);
+
+		let i = 0;
+		for (const it of b) {
+			expect(it).to.equal(`foo${i++}`);
+		}
+	});
+
+	it('should initialize the predefined buffer, which length equals to max size', () => {
+		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5', 'foo6', 'foo7', 'foo8', 'foo9' ];
+		const b = new NanoBuffer(p, 10);
+
+		let i = 0;
+		for (const it of b) {
+			expect(it).to.equal(`foo${i++}`);
+		}
+	});
+
+	it('should initialize the predefined buffer, which is larger than max size', () => {
+		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5', 'foo6', 'foo7', 'foo8', 'foo9', 'foo10', 'foo11', 'foo12' ];
+
+		const b = new NanoBuffer(p, 10);
+
+		let i = 3;
 		for (const it of b) {
 			expect(it).to.equal(`foo${i++}`);
 		}

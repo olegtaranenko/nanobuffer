@@ -5,9 +5,26 @@ export class NanoBuffer {
 	/**
 	 * Creates a `NanoBuffer` instance.
 	 *
+	 * @param {Array|Number} [bufferOrMaxSize=undefined] - The initial buffer values.
 	 * @param {Number} [maxSize=10] - The initial buffer size.
 	 */
-	constructor(maxSize = 10) {
+	constructor(bufferOrMaxSize = undefined, maxSize) {
+		let buffer;
+		if (Array.isArray(bufferOrMaxSize)) {
+			buffer = bufferOrMaxSize;
+			if (maxSize === undefined) {
+				maxSize = buffer.length;
+			}
+		} else {
+			if (typeof bufferOrMaxSize === 'undefined') {
+				maxSize = 10;
+			} else {
+				if (maxSize !== undefined) {
+					throw new TypeError('Second argument should not be given, if the first argument is a number');
+				}
+				maxSize = bufferOrMaxSize;
+			}
+		}
 		if (typeof maxSize !== 'number') {
 			throw new TypeError('Expected maxSize to be a number');
 		}
@@ -16,19 +33,40 @@ export class NanoBuffer {
 			throw new RangeError('Expected maxSize to be zero or greater');
 		}
 
+		let isInitBuffer = Array.isArray(buffer);
+		let safeBuffer;
+		let safeHead = 0;
+		let safeSize = 0;
+		if (isInitBuffer) {
+			const bufferLength = buffer.length;
+			if (bufferLength > maxSize) {
+				safeSize = maxSize;
+				safeHead = bufferLength % maxSize;
+				const tailSize = maxSize - safeHead;
+				const breakIndex = -maxSize + tailSize;
+				safeBuffer = buffer.slice(breakIndex).concat(buffer.slice(-maxSize, breakIndex));
+			} else {
+				safeBuffer = buffer;
+				safeSize = bufferLength;
+				safeHead = bufferLength;
+			}
+			if (--safeHead < 0) {
+				safeHead = bufferLength - 1;
+			}
+		}
 		/**
 		 * The buffer where the values are stored.
 		 * @type {Array}
 		 * @access private
 		 */
-		this._buffer = Array(maxSize | 0);
+		this._buffer = isInitBuffer ? safeBuffer : Array(maxSize);
 
 		/**
 		 * The index of the newest value in the buffer.
 		 * @type {Number}
 		 * @access private
 		 */
-		this._head = 0;
+		this._head = safeHead;
 
 		/**
 		 * The maximum number of values to store in the buffer.
@@ -42,7 +80,7 @@ export class NanoBuffer {
 		 * @type {Number}
 		 * @access private
 		 */
-		this._size = 0;
+		this._size = safeSize;
 	}
 
 	/**
@@ -92,10 +130,10 @@ export class NanoBuffer {
 			tmp.push(value);
 		}
 
-		this._buffer  = tmp._buffer;
-		this._head    = tmp._head;
+		this._buffer = tmp._buffer;
+		this._head = tmp._head;
 		this._maxSize = tmp._maxSize;
-		this._size    = tmp._size;
+		this._size = tmp._size;
 
 		tmp._buffer = null;
 	}
