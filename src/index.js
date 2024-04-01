@@ -173,6 +173,19 @@ export class NanoBuffer {
 		return this;
 	}
 
+
+	/**
+	 * Get stack top element.
+	 *
+	 * @return {undefined|*} undefined if buffer is empty
+	 */
+	top() {
+		if (this._size === 0 && this._head === 0) {
+			return undefined;
+		}
+		return this._buffer[this._head];
+	}
+
 	/**
 	 * Removes all values in the buffer.
 	 *
