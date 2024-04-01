@@ -41,16 +41,11 @@ export class NanoBuffer {
 			const bufferLength = buffer.length;
 			if (bufferLength > maxSize) {
 				safeSize = maxSize;
-				safeHead = bufferLength % maxSize;
-				const tailSize = maxSize - safeHead;
-				const breakIndex = -maxSize + tailSize;
-				safeBuffer = buffer.slice(breakIndex).concat(buffer.slice(-maxSize, breakIndex));
+				safeHead = maxSize - 1;
+				safeBuffer = buffer.slice(-maxSize);
 			} else {
 				safeBuffer = buffer;
 				safeSize = bufferLength;
-				safeHead = bufferLength;
-			}
-			if (--safeHead < 0) {
 				safeHead = bufferLength - 1;
 			}
 		}
