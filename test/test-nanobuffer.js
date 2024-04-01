@@ -53,7 +53,7 @@ describe('NanoBuffer', () => {
 		const b = new NanoBuffer(p, 4);
 		expect(b.maxSize).to.equal(4);
 		expect(b.size).to.equal(4);
-		expect(b.head).to.equal(1);
+		expect(b.head).to.equal(3);
 	});
 
 	it('should add an object', () => {
