@@ -114,7 +114,19 @@ buffer.clear();
 console.log(buffer.size); // 0
 ```
 
+#### `top()`
+
+Get head (or stack's top) element from the buffer without need to deal with iterator. If buffer is empty, returns `undefined`
+
 #### `[Symbol.iterator]()`
+
+```js
+const buffer = new NanoBuffer;
+
+buffer.push('hi');
+buffer.push('world');
+console.log(buffer.top()); // 'world
+```
 
 Returns an iterator that can be used in a for-of loop.
 

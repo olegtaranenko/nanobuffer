@@ -193,6 +193,22 @@ describe('NanoBuffer', () => {
 		}
 	});
 
+	it('should get undefined top of empty buffer', () => {
+		const b = new NanoBuffer();
+		const top = b.top();
+		expect(top).to.be.undefined;
+	});
+
+	it('should get top element', () => {
+		const b = new NanoBuffer();
+
+		b.push('hi');
+		b.push('world');
+
+		const top = b.top();
+		expect(top).to.equal('world');
+	});
+
 	it('should be manually iterable', () => {
 		const b = new NanoBuffer(10);
 
