@@ -20,6 +20,31 @@ describe('NanoBuffer', () => {
 		}).to.throw(RangeError, 'Expected maxSize to be zero or greater');
 	});
 
+	it('should throw error if invalid top() argument', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.top('hi');
+		}).to.throw(TypeError, 'Expected index to be a number');
+	});
+
+	it('should throw error if top() argument is not a number', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.top(NaN);
+		}).to.throw(RangeError, 'Expected index to be zero or greater');
+	});
+
+	it('should throw error if top() argument is negative', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.top(-123);
+		}).to.throw(RangeError, 'Expected index to be zero or greater');
+	});
+
+	it('should get the max size', () => {
+		expect(new NanoBuffer(20).maxSize).to.equal(20);
+	});
+
 	it('should throw error if given two wrong arguments', () => {
 		expect(() => {
 			new NanoBuffer(20, 10);
@@ -265,7 +290,73 @@ describe('NanoBuffer', () => {
 		expect(top).to.be.undefined;
 	});
 
-	it('should get top element', () => {
+	it('should top() get undefined by empty buffer and specified index', () => {
+		const b = new NanoBuffer();
+		const top = b.top(1);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by non-wrapped buffer and specified index, equal to buffer size', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by non-wrapped buffer and specified index, greater than buffer size', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size + 1);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by non-wrapped buffer and specified index, greater than double buffer size', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size * 2 + 1);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by wrapped buffer and specified index, equal to buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by wrapped buffer and specified index, greater than buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size + 1);
+		expect(top).to.be.undefined;
+	});
+
+	it('should top() get undefined by wrapped buffer and specified index, greater than double buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(b.size * 2 + 1);
+		expect(top).to.be.undefined;
+	});
+
+	it('should get top() element', () => {
 		const b = new NanoBuffer();
 
 		b.push('hi');
@@ -273,6 +364,26 @@ describe('NanoBuffer', () => {
 
 		const top = b.top();
 		expect(top).to.equal('world');
+	});
+
+	it('should get element below the top for non-wrapped buffer', () => {
+		const b = new NanoBuffer();
+
+		b.push('hi');
+		b.push('world');
+
+		const top = b.top();
+		expect(top).to.equal('world');
+	});
+
+	it('should get first element below the top for wrapped buffer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 15; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top(5);
+		expect(top).to.equal('foo9');
 	});
 
 	it('should be manually iterable', () => {
