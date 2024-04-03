@@ -137,15 +137,34 @@ export class NanoBuffer {
 
 
 	/**
-	 * Get stack top element.
+	 * Get stack top element. Optionally take the elements below the top element.
+	 * This is rough analog as if to get element from arroy via array[array.length - 1 - index]
+	 * If index > buffer size, it returns undefined
 	 *
-	 * @return {undefined|*} undefined if buffer is empty
+	 * @param {Number} [index=0] - The index of the element from the top stack.
+	 * @return {undefined|*} array element. `undefined` - if the buffer is empty or index greater then buffer size
 	 */
-	top() {
-		if (this._size === 0 && this._head === 0) {
+	top(index = 0) {
+		if (typeof index !== 'number') {
+			throw new TypeError('Expected index to be a number');
+		}
+
+		if (isNaN(index) || index < 0) {
+			throw new RangeError('Expected index to be zero or greater');
+		}
+
+		let _index = this._head;
+
+		if ((this._size === 0 && _index === 0) || index >= this._size) {
 			return undefined;
 		}
-		return this._buffer[this._head];
+		if (index > 0) {
+			_index -= index;
+			if (_index < 0) {
+				_index += this._maxSize;
+			}
+		}
+		return this._buffer[_index];
 	}
 
 	/**
