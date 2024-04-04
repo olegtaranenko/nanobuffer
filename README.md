@@ -113,6 +113,18 @@ buffer
 	.push({ foo: 'bar' });
 ```
 
+#### `pop()`
+
+Removes the last element from an array and returns it. If the buffer is empty just returns undefined.
+
+```js
+const buffer = new NanoBuffer;
+buffer
+	.push('hello')
+	.push('world');
+console.log(buffer.pop(), buffer.pop()) // world hello
+```
+
 #### `clear()`
 
 Removes all values in the buffer.

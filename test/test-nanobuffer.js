@@ -93,6 +93,19 @@ describe('NanoBuffer', () => {
 		expect(b.head).to.equal(1);
 	});
 
+	it('should pop an object', () => {
+		const b = new NanoBuffer();
+		b.push('foo');
+		b.push('bar');
+		expect(b.size).to.equal(2);
+		const bar = b.pop();
+		expect(b.size).to.equal(1);
+		expect(bar).to.equal('bar');
+		let foo = b.pop();
+		expect(b.size).to.equal(0);
+		expect(foo).to.equal('foo');
+	});
+
 	it('should fill the buffer and wrap', () => {
 		const b = new NanoBuffer(10);
 
@@ -111,6 +124,48 @@ describe('NanoBuffer', () => {
 
 		expect(b.size).to.equal(10);
 		expect(b.head).to.equal(9);
+	});
+
+	it('should pop the object from filled buffer and back wrap', () => {
+		const b = new NanoBuffer(10);
+
+		expect(b.size).to.equal(0);
+
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		expect(b.size).to.equal(10);
+		expect(b.head).to.equal(2);
+
+		let foo;
+		for (let i = 0; i < 7; i++) {
+			foo = b.pop(`bar${i}`);
+		}
+		expect(foo).to.equal('foo6');
+		expect(b.size).to.equal(3);
+		expect(b.head).to.equal(5);
+	});
+
+	it('should exhaust the buffer', () => {
+		const b = new NanoBuffer(10);
+
+		expect(b.size).to.equal(0);
+
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		expect(b.size).to.equal(10);
+		expect(b.head).to.equal(2);
+
+		let foo;
+		for (let i = 0; i < 11; i++) {
+			foo = b.pop(`bar${i}`);
+		}
+		expect(foo).to.be.undefined;
+		expect(b.size).to.equal(0);
+		expect(b.head).to.equal(2);
 	});
 
 	it('should not buffer anything if max size is zero', () => {
