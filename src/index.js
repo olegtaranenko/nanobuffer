@@ -111,6 +111,28 @@ export class NanoBuffer {
 	}
 
 	/**
+	 * The analog of usual `Array.pop` method
+	 *
+	 * @returns {*} the last element, undefined on empty buffer
+	 * @access public
+	 */
+	pop() {
+		if (this._maxSize && this._size > 0) {
+			let ret = this._buffer[this._head--];
+
+			if (this._head < 0) {
+				// be back wrapped
+				this._head += this._maxSize;
+			}
+
+			this._size = Math.max(this._size - 1, 0);
+			return ret;
+		}
+
+		return undefined;
+	}
+
+	/**
 	 * Inserts a new value into the buffer.
 	 *
 	 * @param {*} value - The value to store.
@@ -124,7 +146,7 @@ export class NanoBuffer {
 			}
 
 			if (this._head >= this._maxSize) {
-				// we wrapped
+				// be wrapped
 				this._head = 0;
 			}
 
