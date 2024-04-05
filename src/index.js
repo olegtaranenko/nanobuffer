@@ -92,10 +92,10 @@ export class NanoBuffer {
 			tmp.push(value);
 		}
 
-		this._buffer  = tmp._buffer;
-		this._head    = tmp._head;
+		this._buffer = tmp._buffer;
+		this._head = tmp._head;
 		this._maxSize = tmp._maxSize;
-		this._size    = tmp._size;
+		this._size = tmp._size;
 
 		tmp._buffer = null;
 	}
@@ -153,16 +153,51 @@ export class NanoBuffer {
 			throw new RangeError('Expected index to be zero or greater');
 		}
 
-		let _index = this._head;
-
-		if ((this._size === 0 && _index === 0) || index >= this._size) {
+		if ((this._size === 0 && this._head === 0) || index >= this._size) {
 			return undefined;
 		}
+
+		let _index = this._head;
 		if (index > 0) {
 			_index -= index;
 			if (_index < 0) {
 				_index += this._maxSize;
 			}
+		}
+		return this._buffer[_index];
+	}
+
+	/**
+	 * Get first element of the buffered array (or stack bottom). Optionally take the elements above the bottom element (n-th from the beginning).
+	 * This is rough analog as if to get indexed element - array[index]
+	 * If index > buffer size, it returns undefined
+	 *
+	 * @param {Number} [index=0] - The index of the element.
+	 * @return {undefined|*} array element. `undefined` - if the buffer is empty or index greater then buffer size
+	 */
+	bottom(index = 0) {
+		// noinspection DuplicatedCode
+		if (typeof index !== 'number') {
+			throw new TypeError('Expected index to be a number');
+		}
+
+		if (isNaN(index) || index < 0) {
+			throw new RangeError('Expected index to be zero or greater');
+		}
+
+		if ((this._size === 0 && this._head === 0) || index >= this._size) {
+			return undefined;
+		}
+
+		let _index = this._head - this._size + 1;
+		if (index > 0) {
+			_index += index;
+			if (_index >= this._maxSize) {
+				_index -= this._maxSize;
+			}
+		}
+		if (_index < 0) {
+			_index += this._maxSize;
 		}
 		return this._buffer[_index];
 	}
