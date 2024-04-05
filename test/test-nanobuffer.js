@@ -345,10 +345,22 @@ describe('NanoBuffer', () => {
 		expect(top).to.be.undefined;
 	});
 
+	it('should get undefined bottom of empty buffer', () => {
+		const b = new NanoBuffer();
+		const bottom = b.bottom();
+		expect(bottom).to.be.undefined;
+	});
+
 	it('should top() get undefined by empty buffer and specified index', () => {
 		const b = new NanoBuffer();
 		const top = b.top(1);
 		expect(top).to.be.undefined;
+	});
+
+	it('should bottom() get undefined by empty buffer and specified index', () => {
+		const b = new NanoBuffer();
+		const bottom = b.bottom(1);
+		expect(bottom).to.be.undefined;
 	});
 
 	it('should top() get undefined by non-wrapped buffer and specified index, equal to buffer size', () => {
@@ -361,6 +373,16 @@ describe('NanoBuffer', () => {
 		expect(top).to.be.undefined;
 	});
 
+	it('should bottom() get undefined by non-wrapped buffer and specified index, equal to buffer size', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(b.size);
+		expect(bottom).to.be.undefined;
+	});
+
 	it('should top() get undefined by non-wrapped buffer and specified index, greater than buffer size', () => {
 		const b = new NanoBuffer(10);
 		for (let i = 0; i < 5; i++) {
@@ -369,6 +391,16 @@ describe('NanoBuffer', () => {
 
 		const top = b.top(b.size + 1);
 		expect(top).to.be.undefined;
+	});
+
+	it('should bottom() get undefined by non-wrapped buffer and specified index, greater than buffer size', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(b.size + 1);
+		expect(bottom).to.be.undefined;
 	});
 
 	it('should top() get undefined by non-wrapped buffer and specified index, greater than double buffer size', () => {
@@ -391,6 +423,16 @@ describe('NanoBuffer', () => {
 		expect(top).to.be.undefined;
 	});
 
+	it('should bottom() get undefined by wrapped buffer and specified index, equal to buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(b.size);
+		expect(bottom).to.be.undefined;
+	});
+
 	it('should top() get undefined by wrapped buffer and specified index, greater than buffer size', () => {
 		const b = new NanoBuffer(3);
 		for (let i = 0; i < 5; i++) {
@@ -399,6 +441,16 @@ describe('NanoBuffer', () => {
 
 		const top = b.top(b.size + 1);
 		expect(top).to.be.undefined;
+	});
+
+	it('should bottom() get undefined by wrapped buffer and specified index, greater than buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(b.size + 1);
+		expect(bottom).to.be.undefined;
 	});
 
 	it('should top() get undefined by wrapped buffer and specified index, greater than double buffer size', () => {
@@ -411,7 +463,17 @@ describe('NanoBuffer', () => {
 		expect(top).to.be.undefined;
 	});
 
-	it('should get top() element', () => {
+	it('should bottom() get undefined by wrapped buffer and specified index, greater than double buffer size', () => {
+		const b = new NanoBuffer(3);
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(b.size * 2 + 1);
+		expect(bottom).to.be.undefined;
+	});
+
+	it('should get array\'s first element (the stack top), simple', () => {
 		const b = new NanoBuffer();
 
 		b.push('hi');
@@ -421,24 +483,102 @@ describe('NanoBuffer', () => {
 		expect(top).to.equal('world');
 	});
 
-	it('should get element below the top for non-wrapped buffer', () => {
+	it('should get array\'s first element (the stack bottom), simple', () => {
 		const b = new NanoBuffer();
 
 		b.push('hi');
 		b.push('world');
 
-		const top = b.top();
-		expect(top).to.equal('world');
+		const bottom = b.bottom();
+		expect(bottom).to.equal('hi');
 	});
 
-	it('should get first element below the top for wrapped buffer', () => {
+	it('should get array\'s last element (top stack) for wrapped buffer', () => {
 		const b = new NanoBuffer(10);
-		for (let i = 0; i < 15; i++) {
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const top = b.top();
+		expect(top).to.equal('foo12');
+	});
+
+	it('should get array\'s first element (the stack bottom for wrapped buffer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom();
+		expect(bottom).to.equal('foo3');
+	});
+
+	it('should get n-th last element (n-th below the top) for wrapped buffer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 13; i++) {
 			b.push(`foo${i}`);
 		}
 
 		const top = b.top(5);
-		expect(top).to.equal('foo9');
+		expect(top).to.equal('foo7');
+	});
+
+	it('should get array\' n-th element (n-th from the bottom)', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(5);
+		expect(bottom).to.equal('foo8');
+	});
+
+	it('should get array\' n-th element (n-th from the bottom) non-wrapped index pointer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(9);
+		expect(bottom).to.equal('foo12');
+	});
+
+	it('should get corrected cyclic dependencies for non-wrapped buffer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 7; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom();
+		const top = b.top();
+		const cycleIndex = b.size - 1;
+		expect(bottom).to.equal(b.top(cycleIndex));
+		expect(top).to.equal(b.bottom(cycleIndex));
+	});
+
+	it('should get corrected cyclic dependencies for wrapped buffer', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 13; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom();
+		const top = b.top();
+		const cycleIndex = b.size - 1;
+		expect(bottom).to.equal(b.top(cycleIndex));
+		expect(top).to.equal(b.bottom(cycleIndex));
+	});
+
+	it('should get corrected quick brown fox', () => {
+		const b = new NanoBuffer(6);
+		const fox = 'The quick brown fox jumps over the lazy dog';
+		fox.split(' ').forEach((word) => {
+			b.push(word);
+		});
+
+		expect(b.bottom()).to.equal('fox');
+		expect(b.bottom(1)).to.equal('jumps');
+		expect(b.top()).to.equal('dog');
 	});
 
 	it('should be manually iterable', () => {
