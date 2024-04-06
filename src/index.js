@@ -149,7 +149,7 @@ export class NanoBuffer {
 			throw new TypeError('Expected index to be a number');
 		}
 
-		if (isNaN(index) || index < 0) {
+		if (isNaN(index)) {
 			throw new RangeError('Expected index to be zero or greater');
 		}
 
@@ -181,7 +181,7 @@ export class NanoBuffer {
 			throw new TypeError('Expected index to be a number');
 		}
 
-		if (isNaN(index) || index < 0) {
+		if (isNaN(index)) {
 			throw new RangeError('Expected index to be zero or greater');
 		}
 
@@ -192,9 +192,6 @@ export class NanoBuffer {
 		let _index = this._head - this._size + 1;
 		if (index > 0) {
 			_index += index;
-			if (_index >= this._maxSize) {
-				_index -= this._maxSize;
-			}
 		}
 		if (_index < 0) {
 			_index += this._maxSize;
