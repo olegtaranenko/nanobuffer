@@ -27,6 +27,13 @@ describe('NanoBuffer', () => {
 		}).to.throw(TypeError, 'Expected index to be a number');
 	});
 
+	it('should throw error if invalid bottom() argument', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.bottom('hi');
+		}).to.throw(TypeError, 'Expected index to be a number');
+	});
+
 	it('should throw error if top() argument is not a number', () => {
 		expect(() => {
 			const b = new NanoBuffer();
@@ -34,11 +41,25 @@ describe('NanoBuffer', () => {
 		}).to.throw(RangeError, 'Expected index to be zero or greater');
 	});
 
-	it('should throw error if top() argument is negative', () => {
+	it('should throw error if bottom() argument is not a number', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.bottom(NaN);
+		}).to.throw(RangeError, 'Expected index to be zero or greater');
+	});
+
+	it('should NOT throw error if top() argument is negative', () => {
 		expect(() => {
 			const b = new NanoBuffer();
 			b.top(-123);
-		}).to.throw(RangeError, 'Expected index to be zero or greater');
+		}).to.not.throw(RangeError, 'Expected index to be zero or greater');
+	});
+
+	it('should throw error if bottom() argument is negative', () => {
+		expect(() => {
+			const b = new NanoBuffer();
+			b.bottom(-123);
+		}).to.not.throw(RangeError, 'Expected index to be zero or greater');
 	});
 
 	it('should get the max size', () => {
@@ -554,6 +575,16 @@ describe('NanoBuffer', () => {
 		const cycleIndex = b.size - 1;
 		expect(bottom).to.equal(b.top(cycleIndex));
 		expect(top).to.equal(b.bottom(cycleIndex));
+	});
+
+	it('should bottom() get object for wrapped buffer and wrapped index', () => {
+		const b = new NanoBuffer(10);
+		for (let i = 0; i < 18; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const bottom = b.bottom(5);
+		expect(bottom).to.equal('foo13');
 	});
 
 	it('should get corrected cyclic dependencies for wrapped buffer', () => {
