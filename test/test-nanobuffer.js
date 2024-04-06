@@ -55,11 +55,21 @@ describe('NanoBuffer', () => {
 		}).to.not.throw(RangeError, 'Expected index to be zero or greater');
 	});
 
-	it('should throw error if bottom() argument is negative', () => {
+	it('should NOT throw error if bottom() argument is negative', () => {
 		expect(() => {
 			const b = new NanoBuffer();
 			b.bottom(-123);
 		}).to.not.throw(RangeError, 'Expected index to be zero or greater');
+	});
+
+	it('should get undefined if top() argument is negative', () => {
+		const b = new NanoBuffer;
+		expect(b.top(-1)).to.be.undefined;
+	});
+
+	it('should get undefined if bottom() argument is negative', () => {
+		const b = new NanoBuffer;
+		expect(b.bottom(-1)).to.be.undefined;
 	});
 
 	it('should get the max size', () => {
