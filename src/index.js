@@ -185,7 +185,7 @@ export class NanoBuffer {
 			throw new RangeError('Expected index to be zero or greater');
 		}
 
-		if ((this._size === 0 && this._head === 0) || index >= this._size) {
+		if ((this._size === 0 && this._head === 0) || index >= this._size || index < 0) {
 			return undefined;
 		}
 
