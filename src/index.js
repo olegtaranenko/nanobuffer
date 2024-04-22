@@ -118,6 +118,8 @@ export class NanoBuffer {
 	 */
 	pop() {
 		if (this._maxSize && this._size > 0) {
+			let currentIndex = this._head;
+			const currentValue = this._buffer[currentIndex];
 			let ret = this._buffer[this._head--];
 
 			if (this._head < 0) {
@@ -126,6 +128,9 @@ export class NanoBuffer {
 			}
 
 			this._size = Math.max(this._size - 1, 0);
+			if (currentValue !== undefined) {
+				delete this._buffer[currentIndex];
+			}
 			return ret;
 		}
 
@@ -151,7 +156,12 @@ export class NanoBuffer {
 			}
 
 			this._size = Math.min(this._size + 1, this._maxSize);
-			this._buffer[this._head] = value;
+			const currentValue = this._buffer[this._head];
+			if (value !== undefined) {
+				this._buffer[this._head] = value;
+			} else if (currentValue !== undefined) {
+				delete this._buffer[this._head];
+			}
 		}
 
 		return this;
