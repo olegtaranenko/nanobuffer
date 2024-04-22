@@ -66,6 +66,16 @@ export class NanoBuffer {
 	}
 
 	/**
+	 * Returns `true` if current buffer filled up.
+	 *
+	 * @returns {boolean}
+	 * @access public
+	 */
+	get full() {
+		return this._maxSize === this._size;
+	}
+
+	/**
 	 * Changes the maximum number of values allowed in the buffer.
 	 *
 	 * @param {Number} newMaxSize - The new max size of the buffer.

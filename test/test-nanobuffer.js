@@ -125,6 +125,30 @@ describe('NanoBuffer', () => {
 		expect(b.size).to.equal(10);
 	});
 
+	it('should return proper full flag', () => {
+		const a = new NanoBuffer(0);
+		expect(a.full).to.equal(true);
+
+		const b = new NanoBuffer(10);
+		expect(b.full).to.equal(false);
+
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+		expect(b.full).to.equal(false);
+
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+		expect(b.full).to.equal(true);
+
+		for (let i = 0; i < 5; i++) {
+			b.push(`foo${i}`);
+		}
+		expect(b.full).to.equal(true);
+
+	});
+
 	it('should increase the buffer max size', () => {
 		const b = new NanoBuffer(10);
 
