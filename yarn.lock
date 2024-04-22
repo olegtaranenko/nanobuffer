@@ -385,10 +385,10 @@ eslint-plugin-chai-expect@^3.0.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-chai-expect/-/eslint-plugin-chai-expect-3.0.0.tgz#812d7384756177b2d424040cb3c20e78606db1b2"
   integrity sha512-NS0YBcToJl+BRKBSMCwRs/oHJIX67fG5Gvb4tGked+9Wnd1/PzKijd82B2QVKcSSOwRe+pp4RAJ2AULeck4eQw==
 
-eslint-plugin-mocha@^10.4.1:
-  version "10.4.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-10.4.1.tgz#7975a3dbb0de80a5f3ea69c30f6f1f1c931f8800"
-  integrity sha512-G85ALUgKaLzuEuHhoW3HVRgPTmia6njQC3qCG6CEvA8/Ja9PDZnRZOuzekMki+HaViEQXINuYsmhp5WR5/4MfA==
+eslint-plugin-mocha@^10.4.2:
+  version "10.4.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-mocha/-/eslint-plugin-mocha-10.4.2.tgz#dfaed06d362506c5e4d561c534314e25b3b0f1f7"
+  integrity sha512-cur4dVYnSEWTBwdqIBQFxa/9siAhesu0TX+lbJ4ClE9j0eNMNe6BSx3vkFFNz6tGoveyMyELFXa30f3fvuAVDg==
   dependencies:
     eslint-utils "^3.0.0"
     globals "^13.24.0"
@@ -399,10 +399,10 @@ eslint-plugin-promise@^6.1.1:
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-6.1.1.tgz#269a3e2772f62875661220631bd4dafcb4083816"
   integrity sha512-tjqWDwVZQo7UIPMeDReOpUgHCmCiH+ePnVT+5zVapL0uuHnegBUs2smM13CzOs2Xb5+MHMRFTs9v24yjba4Oig==
 
-eslint-plugin-security@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-security/-/eslint-plugin-security-2.1.1.tgz#4b975326ce17ade28fa8521773e3212677db5fac"
-  integrity sha512-7cspIGj7WTfR3EhaILzAPcfCo5R9FbeWvbgsPYWivSurTBKW88VQxtP3c4aWMG9Hz/GfJlJVdXEJ3c8LqS+u2w==
+eslint-plugin-security@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-security/-/eslint-plugin-security-3.0.0.tgz#fcecadcf183368a23fd541514d177b09cb92993e"
+  integrity sha512-2Ij7PkmXIF2cKwoVkEgemwoXbOnxg5UfdhdcpNxZwJxC/10dbsdhHISrTyJ/n8DUkt3yiN6P1ywEgcMGjIwHIw==
   dependencies:
     safe-regex "^2.1.1"
 
