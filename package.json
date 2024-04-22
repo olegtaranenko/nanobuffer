@@ -1,6 +1,6 @@
 {
   "name": "nanobuffer",
-  "version": "3.5.0-ot",
+  "version": "3.5.1-ot",
   "description": "Lightweight, fixed-size, cyclic value buffer",
   "type": "module",
   "exports": "./src/index.js",

@@ -124,6 +124,23 @@ describe('NanoBuffer', () => {
 		expect(b.head).to.equal(1);
 	});
 
+	it('should remove the object by push undefined', () => {
+		const b = new NanoBuffer;
+		b._buffer[0] = 'foo';
+		b.push(undefined);
+		const test = b._buffer[0];
+		expect(test).to.be.undefined;
+	});
+
+	it('should remove the object by pop', () => {
+		const b = new NanoBuffer;
+		b.push('foo');
+		const value = b.pop();
+		expect(value).to.equal('foo');
+		const test = b._buffer[0];
+		expect(test).to.be.undefined;
+	});
+
 	it('should pop an object', () => {
 		const b = new NanoBuffer();
 		b.push('foo');
