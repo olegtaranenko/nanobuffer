@@ -94,6 +94,21 @@ buffer.push('there');
 console.log(buffer.size); // 2
 ```
 
+#### `full` Boolean
+
+Gets info about if current buffer filled up.
+
+```js
+const buffer = new NanoBuffer(2);
+
+console.log(buffer.full); // false
+
+buffer.push('hi');
+buffer.push('there');
+
+console.log(buffer.full); // true
+```
+
 ### Methods
 
 #### `push(value)`
