@@ -155,6 +155,22 @@ buffer.clear();
 console.log(buffer.size); // 0
 ```
 
+#### `poke(value, index)`
+
+Replaces single value in the buffer at the index calculated from the its bottom
+
+Returns the `NanoBuffer` instance.
+
+```js
+const buffer = new NanoBuffer(5);
+const fox = 'The quick brown fox jumps over the lazy dog'
+fox.split(' ').forEach((word) => {
+	b.push(word)
+})
+buffer.poke('cat', 4)
+console.log(buffer.top()); // cat
+```
+
 #### `top(index=0)`
 
 Get array's last element (or stack's top) without need to deal with iterator. If buffer is empty, returns `undefined`. 

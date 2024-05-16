@@ -242,16 +242,7 @@ export class NanoBuffer {
 		return this._buffer[_index];
 	}
 
-	/**
-	 * Get first element of the buffered array (or stack bottom). Optionally take the elements above the bottom element (n-th from the beginning).
-	 * This is rough analog as if to get indexed element - array[index]
-	 * If index > buffer size, it returns undefined
-	 *
-	 * @param {Number} [index=0] - The index of the element.
-	 * @return {undefined|*} array element. `undefined` - if the buffer is empty or index greater then buffer size
-	 */
-	bottom(index = 0) {
-		// noinspection DuplicatedCode
+	_calculateGetIndex(index) {
 		if (typeof index !== 'number') {
 			throw new TypeError('Expected index to be a number');
 		}
@@ -271,7 +262,45 @@ export class NanoBuffer {
 		if (_index < 0) {
 			_index += this._maxSize;
 		}
-		return this._buffer[_index];
+		return _index;
+	}
+
+	/**
+	 * Get first element of the buffered array (or stack bottom). Optionally take the elements above the bottom element (n-th from the beginning).
+	 * This is rough analog as if to get indexed element - array[index]
+	 * If index > buffer size, it returns undefined
+	 *
+	 * @param {Number} [index=0] - The index of the element.
+	 * @return {undefined|*} array element. `undefined` - if the buffer is empty or index greater then buffer size
+	 */
+	bottom(index = 0) {
+		// noinspection DuplicatedCode
+		let _index = this._calculateGetIndex(index);
+		if (_index !== undefined) {
+			return this._buffer[_index];
+		}
+		return undefined;
+	}
+
+	/**
+	 * Reduced version of the ```Array.poke()``` method
+	 * Replaces only single value in the buffer.
+	 * The index calculated from the bottom (or first element), just like in usual array.
+	 *
+	 * @param {Number} value to be inserted into the array
+	 * @param {Number} [index = 0] indexed from buffer bottom or fir
+	 * @returns {NanoBuffer}
+	 */
+	poke(value, index = 0) {
+		let _index = this._calculateGetIndex(index);
+		if (_index !== undefined) {
+			if (value === undefined) {
+				delete this._buffer[_index];
+			} else {
+				this._buffer[_index] = value;
+			}
+		}
+		return this;
 	}
 
 	/**
