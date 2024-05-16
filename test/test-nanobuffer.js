@@ -497,6 +497,35 @@ describe('NanoBuffer', () => {
 		expect(b.top()).to.equal('dog');
 	});
 
+	it('should handle of poke method', () => {
+		const fox = 'The quick brown fox jumps over the lazy dog';
+		const b = new NanoBuffer(10);
+		fox.split(' ').forEach((word) => {
+			b.push(word);
+		});
+
+		b.poke('cat', 8);
+		expect(b.top()).to.equal('cat');
+
+		b.poke(undefined);
+		expect(b.bottom()).to.be.undefined;
+	});
+
+	it('should handle of poke method of wrapped buffer', () => {
+		const fox = 'The quick brown fox jumps over the lazy dog';
+		const b = new NanoBuffer(5);
+		fox.split(' ').forEach((word) => {
+			b.push(word);
+		});
+
+		b.poke('cat', 8);
+		expect(b.bottom()).to.equal('jumps');
+		expect(b.top()).to.equal('dog');
+
+		b.poke(undefined, 0);
+		expect(b.bottom()).to.be.undefined;
+	});
+
 	it('should be manually iterable', () => {
 		const b = new NanoBuffer(10);
 
