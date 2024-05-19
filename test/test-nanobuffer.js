@@ -711,6 +711,82 @@ describe('NanoBuffer', () => {
 		expect(r.value).to.be.undefined;
 	});
 
+	it('should exists iterator method', () => {
+		const b = new NanoBuffer(10);
+
+		for (let i = 0; i <= 17; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b.iterator();
+		let i = 8;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i++}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should iterate over buffer with offset', () => {
+		const b = new NanoBuffer(10);
+
+		let bufferSize = 13;
+		for (let i = 0; i <= bufferSize; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const startFrom = 4;
+		const it = b.iterator(false, startFrom);
+		let r = it.next();
+		let i = bufferSize - startFrom - 1;
+		let counter = 0;
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i++}`);
+			r = it.next();
+			counter++;
+		}
+		expect(counter).equals(b.size - startFrom);
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should not iterate over buffer with offset, exceeds buffer size', () => {
+		const b = new NanoBuffer(10);
+
+		let bufferSize = 5;
+		for (let i = 0; i <= bufferSize; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b.iterator(false, bufferSize + 1);
+		let r = it.next();
+		expect(r.value).be.undefined;
+	});
+
+	it('should iterate over buffer with negative offset', () => {
+		const b = new NanoBuffer(10);
+
+		let bufferSize = 13;
+		for (let i = 0; i <= bufferSize; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const startFrom = -6;
+		const it = b.iterator(false, startFrom);
+		let r = it.next();
+		let i = bufferSize + startFrom + 1;
+		let counter = 0;
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i++}`);
+			r = it.next();
+			counter++;
+		}
+		expect(counter).equals(-startFrom);
+		expect(r.value).to.be.undefined;
+	});
+
 	it('should empty buffer not return anything by manually iterating', () => {
 		const b = new NanoBuffer(10);
 
@@ -762,6 +838,60 @@ describe('NanoBuffer', () => {
 		}
 
 		expect(r.value).to.be.undefined;
+	});
+
+	it('should iterator method be reversed', () => {
+		const b = new NanoBuffer(10);
+
+		for (let i = 0; i <= 5; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b.iterator(true);
+		let i = b.head;
+		let r = it.next();
+
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i--}`);
+			r = it.next();
+		}
+
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should iterator method be reversed with offset', () => {
+		const b = new NanoBuffer(10);
+
+		let bufferSize = 15;
+		for (let i = 0; i <= bufferSize; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const startFrom = 3;
+		const it = b.iterator(true, startFrom);
+		let r = it.next();
+		let i = bufferSize - startFrom;
+		let counter = 0;
+		while (!r.done) {
+			expect(r.value).to.equal(`foo${i--}`);
+			r = it.next();
+			counter++;
+		}
+		expect(counter).equals(b.size - startFrom);
+		expect(r.value).to.be.undefined;
+	});
+
+	it('should not iterate reversed over buffer with offset, exceeds buffer size', () => {
+		const b = new NanoBuffer(10);
+
+		let bufferSize = 5;
+		for (let i = 0; i <= bufferSize; i++) {
+			b.push(`foo${i}`);
+		}
+
+		const it = b.iterator(true, bufferSize + 1);
+		let r = it.next();
+		expect(r.value).be.undefined;
 	});
 
 	it('should empty buffer not return anything by back iterating', () => {
