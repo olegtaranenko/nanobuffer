@@ -104,6 +104,13 @@ describe('NanoBuffer', () => {
 		expect(b.head).to.equal(5);
 	});
 
+	it('should be initialized without predefined array but with given size', () => {
+		const b = new NanoBuffer(undefined, 20);
+		expect(b.maxSize).to.equal(20);
+		expect(b.size).to.equal(0);
+		expect(b.head).to.equal(0);
+	});
+
 	it('should be initialized with a predefined array and a max size', () => {
 		const p = [ 'foo0', 'foo1', 'foo2', 'foo3', 'foo4', 'foo5' ];
 		const b = new NanoBuffer(p, 4);

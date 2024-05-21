@@ -15,15 +15,13 @@ export class NanoBuffer {
 			if (maxSize === undefined) {
 				maxSize = buffer.length;
 			}
-		} else {
-			if (typeof bufferOrMaxSize === 'undefined') {
-				maxSize = 10;
-			} else {
-				if (maxSize !== undefined) {
-					throw new TypeError('Second argument should not be given, if the first argument is a number');
-				}
-				maxSize = bufferOrMaxSize;
+		} else if (bufferOrMaxSize !== undefined || maxSize !== undefined) {
+			if (typeof bufferOrMaxSize === 'number' && maxSize !== undefined) {
+				throw new TypeError('Second argument should not be given, if the first argument is a number');
 			}
+			maxSize ??= bufferOrMaxSize;
+		} else {
+			maxSize = 10;
 		}
 		if (typeof maxSize !== 'number') {
 			throw new TypeError('Expected maxSize to be a number');
