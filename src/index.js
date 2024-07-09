@@ -23,7 +23,7 @@ export class NanoBuffer {
 			}
 			maxSize ??= bufferOrMaxSize;
 		} else {
-			maxSize = 10;
+			maxSize = DEFAULT_MAX_SIZE;
 		}
 		if (typeof maxSize !== 'number') {
 			throw new TypeError('Expected maxSize to be a number');
