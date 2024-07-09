@@ -99,14 +99,6 @@ export class NanoBuffer {
 	}
 
 	/**
-	 * Returns current default maximal buffer size. It's possible in the future a configuration option will be added.
-	 * @return {number}
-	 */
-	get defaultMaxSize() {
-		return DEFAULT_MAX_SIZE;
-	}
-
-	/**
 	 * Changes the maximum number of values allowed in the buffer.
 	 *
 	 * @param {Number} newMaxSize - The new max size of the buffer.
@@ -220,5 +212,13 @@ export class NanoBuffer {
 		};
 	}
 }
+
+/**
+ * Returns current default maximal buffer size. It's possible in the future a configuration option will be added.
+ * @return {number}
+ */
+NanoBuffer.defaultMaxSize = () => {
+	return DEFAULT_MAX_SIZE;
+};
 
 export default NanoBuffer;
