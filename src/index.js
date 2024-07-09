@@ -99,14 +99,6 @@ export class NanoBuffer {
 	}
 
 	/**
-	 * Returns current default maximal buffer size. It's possible in the future a configuration option will be added.
-	 * @return {number}
-	 */
-	get defaultMaxSize() {
-		return DEFAULT_MAX_SIZE;
-	}
-
-	/**
 	 * Returns `true` if current buffer filled up.
 	 *
 	 * @returns {boolean}
@@ -374,5 +366,13 @@ export class NanoBuffer {
 		return this[Symbol.iterator](back, startFrom);
 	}
 }
+
+/**
+ * Returns current default maximal buffer size. It's possible in the future a configuration option will be added.
+ * @return {number}
+ */
+NanoBuffer.defaultMaxSize = () => {
+	return DEFAULT_MAX_SIZE;
+};
 
 export default NanoBuffer;

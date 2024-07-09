@@ -77,11 +77,7 @@ describe('NanoBuffer', () => {
 	});
 
 	it('should get the default max size', () => {
-		expect(new NanoBuffer().defaultMaxSize).to.equal(10);
-	});
-
-	it('should the default max size not changed on explicit max size', () => {
-		expect(new NanoBuffer(20).defaultMaxSize).to.equal(10);
+		expect(NanoBuffer.defaultMaxSize()).to.equal(10);
 	});
 
 	it('should throw error if given two wrong arguments', () => {
@@ -125,6 +121,10 @@ describe('NanoBuffer', () => {
 		expect(b.maxSize).to.equal(4);
 		expect(b.size).to.equal(4);
 		expect(b.head).to.equal(3);
+	});
+
+	it('should get the default max size', () => {
+		expect(NanoBuffer.defaultMaxSize()).to.equal(10);
 	});
 
 	it('should add an object', () => {
