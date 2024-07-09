@@ -27,11 +27,7 @@ describe('NanoBuffer', () => {
 	});
 
 	it('should get the default max size', () => {
-		expect(new NanoBuffer().defaultMaxSize).to.equal(10);
-	});
-
-	it('should the default max size not changed on explicit max size', () => {
-		expect(new NanoBuffer(20).defaultMaxSize).to.equal(10);
+		expect(NanoBuffer.defaultMaxSize()).to.equal(10);
 	});
 
 	it('should add an object', () => {
