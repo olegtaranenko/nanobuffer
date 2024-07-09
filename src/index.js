@@ -1,13 +1,15 @@
 /**
  * A lightweight, fixed-size value buffer.
  */
+const DEFAULT_MAX_SIZE = 10;
+
 export class NanoBuffer {
 	/**
 	 * Creates a `NanoBuffer` instance.
 	 *
 	 * @param {Number} [maxSize=10] - The initial buffer size.
 	 */
-	constructor(maxSize = 10) {
+	constructor(maxSize = DEFAULT_MAX_SIZE) {
 		if (typeof maxSize !== 'number') {
 			throw new TypeError('Expected maxSize to be a number');
 		}
@@ -63,6 +65,10 @@ export class NanoBuffer {
 	 */
 	get maxSize() {
 		return this._maxSize;
+	}
+
+	get defaultMaxSize() {
+		return DEFAULT_MAX_SIZE;
 	}
 
 	/**

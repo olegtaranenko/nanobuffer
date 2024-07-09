@@ -64,6 +64,18 @@ buffer.maxSize = 20;
 console.log(buffer.maxSize); // 20
 ```
 
+#### `maxSize` Number
+
+Gets default max size. It's possible in the future a configuration option, defining default maximal buffer size, will be added 
+
+```js
+const buffer = new NanoBuffer(2);
+
+console.log(buffer.size); // 0
+console.log(buffer.maxSize); // 2
+console.log(buffer.defaultMaxSize); // 10
+```
+
 #### `size` Number
 
 Gets the number of values in the buffer. This will never exceed the `maxSize`.
