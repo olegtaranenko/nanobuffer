@@ -1,6 +1,8 @@
 /**
  * A lightweight, fixed-size value buffer.
  */
+const DEFAULT_MAX_SIZE = 10;
+
 export class NanoBuffer {
 	/**
 	 * Creates a `NanoBuffer` instance.
@@ -94,6 +96,10 @@ export class NanoBuffer {
 	 */
 	get maxSize() {
 		return this._maxSize;
+	}
+
+	get defaultMaxSize() {
+		return DEFAULT_MAX_SIZE;
 	}
 
 	/**
